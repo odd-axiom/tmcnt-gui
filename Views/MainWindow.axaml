@@ -1,0 +1,78 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:tmcnt_gui.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:processing="using:tmcnt_gui.MapProcessing"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="400"
+        x:Class="tmcnt_gui.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Trackmania Map Centering Tool">
+        
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <Grid ShowGridLines="False" Margin="20" ColumnDefinitions = "650, 650" HorizontalAlignment="Center">
+        <StackPanel Margin="10" Grid.Column="0">
+            <StackPanel Margin="10">
+                <TextBlock HorizontalAlignment="Center">Open a map file, then choose the offset by either centering it or choosing exact coordinates.</TextBlock>
+                <TextBlock HorizontalAlignment="Center">When you're finished, press 'Shift Map and Save' to move the map by the chosen amount.</TextBlock>
+            </StackPanel>
+
+            <Button HorizontalAlignment="Center" Margin="5" Click="OpenMap">Open</Button>
+            <TextBlock HorizontalAlignment="Center" Margin="5" Name="FileDescriptionLabel">Select a file</TextBlock>
+
+            <Grid ShowGridLines="False" Margin="15" ColumnDefinitions="300, 300" HorizontalAlignment="Center">
+                <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">
+
+                    <Button HorizontalAlignment="Center" Margin="5" Click="SetOffsetValues">Set Custom Offset</Button>
+
+                    <Grid ShowGridLines="False" Margin="5" ColumnDefinitions="80, 80, 80" 
+                        RowDefinitions="Auto, Auto" HorizontalAlignment="Center"
+                        Grid.Row="0" Grid.Column="1">
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Name="X_Title">X Offset</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Name="Y_Title">Y Offset</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Name="Z_Title">Z Offset</TextBlock>
+
+                        <TextBox Grid.Row="1" Grid.Column="0" Name="X_in" PlaceholderText="0"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="Y_in" PlaceholderText="0"/>
+                        <TextBox Grid.Row="1" Grid.Column="2" Name="Z_in" PlaceholderText="0"/>
+                    </Grid>
+
+                    
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
+                    <Button HorizontalAlignment="Center" Margin="5" Click="SetOffsetAuto">Center Map</Button>
+                </StackPanel>
+            </Grid>
+            <Grid ShowGridLines="False" Margin="10" ColumnDefinitions="150, 150" HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Right" Grid.Column="0" Margin="2">Offset = </TextBlock>
+                <TextBlock Grid.Column="1" Name="OffsetLabel" Margin="2">0 0 0</TextBlock>
+            </Grid>
+
+            <Button HorizontalAlignment="Center" Margin="20" Click="ShiftAndSave">Shift Map and Save</Button>
+
+            
+
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="20">
+                <TextBlock>Warning:</TextBlock>
+                <TextBlock>Shifting a map will reset the author time</TextBlock>
+                <TextBlock>Maps with large blocks may sometimes break if moved to the edge of the grid</TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <Border HorizontalAlignment="Center" Background="LightGray" CornerRadius="10" Width="620" Height="620" Grid.Column="1" VerticalAlignment="Top">
+            <processing:MapGridControl
+                Name="GridDisplay"
+                Width="600"
+                Height="600"/>
+        </Border>
+    </Grid>
+
+</Window>
